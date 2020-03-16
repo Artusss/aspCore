@@ -25,7 +25,11 @@ namespace forum
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseToken("12345");
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<AuthMiddleware>();
+            app.UseMiddleware<RouteMiddleware>();
+
+            // app.UseToken("12345");
 
             app.MapWhen(context => {
                 return context.Request.Query.ContainsKey("product") &&
